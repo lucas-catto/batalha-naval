@@ -16,6 +16,17 @@ var barcos = [
 posicoesBarcos = [];
 var posicao = 0;
 
+var barcosExistentes = 0,
+    tirosDisparados = 0,
+    barcosAtingidos = 0,
+    barcosRestantes = 0,
+    resultadoFinal = 0;
+
+var divBarcosExistentes = document.getElementById('barcosExistentes');
+var divTirosDisparados = document.getElementById('tirosDisparados');
+var divBarcosAtingidos = document.getElementById('barcosAtingidos');
+var divBarcosRestantes = document.getElementById('barcosRestantes');
+
 function montarTabuleiro() {
     
     var linhas = ["", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j"];
@@ -66,16 +77,46 @@ function sortearBarcos() {
         posicoesBarcos[sorteio] = barcos[i];
     }
     console.log(posicoesBarcos);
+    atualizarResultados();
 }
 
 function atirar(img) {
+
+    tirosDisparados++;
     
     if (posicoesBarcos[img.name]) {
         img.src = posicoesBarcos[img.name];
         img.className = 'acertou';
+        barcosAtingidos++;
     } else {
         img.src = 'assets/img/Wave.png';
         img.className = 'errou';
+    }
+
+    atualizarResultados();
+}
+
+function atualizarResultados() {
+
+    barcosExistentes = barcos.length;
+
+    divBarcosExistentes.textContent = barcosExistentes;
+
+    divTirosDisparados.textContent = tirosDisparados;
+    divBarcosAtingidos.textContent = barcosAtingidos;
+
+    divBarcosRestantes.textContent = (barcosExistentes - barcosAtingidos);
+
+    if (barcosExistentes == barcosAtingidos) {
+
+        var resultadoFinal = document.getElementById('resultadoFinal');
+        var texto = "";
+
+        texto += "<h3>Prabéns!!! Você acertou todos os barcos!</h3>";
+        texto +=  `<p>Você precisou de ${tirosDisparados} para acertar todos os ${barcosExistentes} barcos existentes.</p>`;
+
+        resultadoFinal.innerHTML = texto;
+        resultadoFinal.className = "finalizou";
     }
 }
 

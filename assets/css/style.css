@@ -19,8 +19,11 @@ body {
 }
 
 #resultados {
-    height: 200px;
+    padding: 20px;
     border: 5px solid #000;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 table,
